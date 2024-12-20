@@ -94,6 +94,17 @@ function listener4() {
 
 {
   const ee = new events.EventEmitter();
+  // Test .listeners() with no arguments
+  assert.deepStrictEqual(ee.listeners(), []);
+
+  // Verify existing behavior remains unchanged
+  ee.on('foo', listener);
+  assert.deepStrictEqual(ee.listeners(), []);
+  assert.deepStrictEqual(ee.listeners('foo'), [listener]);
+}
+
+{
+  const ee = new events.EventEmitter();
   ee.on('foo', listener);
   const wrappedListener = ee.rawListeners('foo');
   assert.strictEqual(wrappedListener.length, 1);
